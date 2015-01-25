@@ -12,7 +12,7 @@ if (!file.exists(dataDir)) {
 
 # Set name for file in which data set is saved:
 joinName <- 'joinedData.r'
-tidyName <- 'tidyData.r'
+tidyName <- 'tidyData.txt'
 
 ########## Part 1 ##########
 
@@ -20,7 +20,6 @@ tidyName <- 'tidyData.r'
 if (file.exists(joinName)) {
     # Load previously saved data set:
     load(joinName, verbose=TRUE)
-    print(dim(joinedSet))
     print('Data set has been loaded from file.')
 } else {
     # Create one data set from various input files:
@@ -36,7 +35,6 @@ if (file.exists(joinName)) {
             # Construct name of path to directory for current case:
             dataName <- paste0(dataDir, "/", caseStr, '/', 
                                fileStr, "_", caseStr, ".txt")
-            print(dataName)
             
             if (fileStr == fileList[1]) {
                 # Read current file for current (first) case:
@@ -77,7 +75,6 @@ if (file.exists(joinName)) {
     remove(fileList)
     
     # Save joined data set as a file:
-    print(dim(joinedSet))
     save(joinedSet, file=joinName)
     print('Joined data set has been saved to file.')
 }
@@ -120,6 +117,9 @@ indForBoth <- sort(indForBoth)
 namesForBoth <- featureNames[indForBoth]
 remove(featureNames)
 
+# Obtain number of selected features (needed later):
+numSelected <- length(namesForBoth)
+
 # Add subject and activity to list of names:
 namesForExtraction <- c(namesForBoth, "subject", "activity")
 remove(namesForBoth)
@@ -128,7 +128,6 @@ remove(namesForBoth)
 extractedSet <- joinedSet[, namesForExtraction]
 remove(namesForExtraction)
 remove(joinedSet)
-print(dim(extractedSet))
 
 ########## Part 3 ##########
 
@@ -172,11 +171,57 @@ colnames(extractedSet) <- labelNames
 
 ########## Part 5 ##########
 
-#  EDIT
-tidySet <- extractedSet
+# Obtain the labels of the subjects:
+subjectLabels <- sort(unique(extractedSet$subject))
 
-# Create an independent tidy data set with the average 
-# of each variable for each activity and each subject:
+# Get number of subjects:
+numSubjects <- length(subjectLabels)
+
+# Loop over the activities:
+for (currActivity in labelsTable$V2) {
+    
+    # Find rows with current activity:
+    currIndices <- which(extractedSet$activity == currActivity)    
+    
+    # Extract subset of data for current activity:
+    currActivitySet <- extractedSet[currIndices, ]
+    remove(currIndices)
+    
+    # Loop over the subjects:
+    for (currSubject in subjectLabels) {
+        
+        # Find rows with current activity:
+        currIndices <- which(currActivitySet$subject == currSubject)
+        
+        # Extract subset of data for current activitiy and subject:
+        currSet <- currActivitySet[currIndices, ]
+        remove(currIndices)
+        
+        # Calculate averages (skip activity and subject columns):
+        avrgCurrSet <- colMeans(currActivitySet[, seq(1, numSelected, by=1)])
+        
+        # Collect activity, subject and averages into one vector:
+        currRow <- c(currActivity, currSubject, avrgCurrSet)
+        remove(avrgCurrSet)
+        
+        if (currActivity == labelsTable$V2[1] & currSubject == subjectLabels[1]) {
+            # For first activity and first subject, start new data set:
+            tidySet <- currRow
+        } else {
+            # For all other combinations, add to data set:
+            tidySet <- rbind(tidySet, currRow)
+        }
+        remove(currRow)
+            
+    }
+}
+
+# Update column names (first two were missing):
+tidyNames <- colnames(tidySet)
+tidyNames[1] <- "activity"
+tidyNames[2] <- "subject"
+colnames(tidySet) <- tidyNames
+remove(tidyNames)
 
 # Save tidy data set as a txt file:
 write.table(tidySet, file=tidyName, row.name=FALSE)
