@@ -19,8 +19,8 @@ tidyName <- 'tidyData.txt'
 # Load previously saved data set or create one data set from files:
 if (file.exists(joinName)) {
     # Load previously saved data set:
-    load(joinName, verbose=TRUE)
-    print('Data set has been loaded from file.')
+    load(joinName)
+    print('Joined data set has been loaded from file.')
 } else {
     # Create one data set from various input files:
     
@@ -181,7 +181,7 @@ numSubjects <- length(subjectLabels)
 for (currActivity in labelsTable$V2) {
     
     # Find rows with current activity:
-    currIndices <- which(extractedSet$activity == currActivity)    
+    currIndices <- which(extractedSet$activity == currActivity)
     
     # Extract subset of data for current activity:
     currActivitySet <- extractedSet[currIndices, ]
@@ -190,7 +190,7 @@ for (currActivity in labelsTable$V2) {
     # Loop over the subjects:
     for (currSubject in subjectLabels) {
         
-        # Find rows with current activity:
+        # Find rows with current subject:
         currIndices <- which(currActivitySet$subject == currSubject)
         
         # Extract subset of data for current activitiy and subject:
@@ -198,7 +198,8 @@ for (currActivity in labelsTable$V2) {
         remove(currIndices)
         
         # Calculate averages (skip activity and subject columns):
-        avrgCurrSet <- colMeans(currActivitySet[, seq(1, numSelected, by=1)])
+        avrgCurrSet <- colMeans(currSet[, seq(1, numSelected, by=1)])
+        remove(currSet)
         
         # Collect activity, subject and averages into one vector:
         currRow <- c(currActivity, currSubject, avrgCurrSet)
@@ -211,10 +212,12 @@ for (currActivity in labelsTable$V2) {
             # For all other combinations, add to data set:
             tidySet <- rbind(tidySet, currRow)
         }
-        remove(currRow)
-            
+        remove(currRow)        
     }
+    remove(currActivitySet)
 }
+remove(extractedSet)
+remove(labelsTable)
 
 # Update column names (first two were missing):
 tidyNames <- colnames(tidySet)

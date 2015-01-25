@@ -48,6 +48,6 @@ Note: Due to the normalization, i.e. division by the mean value, the measurement
 
 # Author and data
 
-The script has been prepared by BlauBeereB in the context of the course project for the Coursera course "Getting and Cleaning Data" provided by Johns Hopkins University in January 2015. Much of the text describing the sensor signals has been taken from the file "features_info.txt" in the original data set.
+The script has been prepared by BlauBeereB in the context of the course project for the Coursera course "Getting and Cleaning Data" provided by Johns Hopkins University in January 2015. Much of the text describing the sensor signals has been taken from the documentation in the original data set.
 
 
