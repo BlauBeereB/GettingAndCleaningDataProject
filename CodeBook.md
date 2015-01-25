@@ -1,0 +1,3 @@
+## Code book for Course Project in Coursera course "Getting and Cleaning Data"
+
+Some text here...
