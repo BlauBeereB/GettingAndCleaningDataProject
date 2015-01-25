@@ -1,4 +1,4 @@
-## README.md for script run_analysis.r
+## README.md for script run_analysis.R
 
 # Instructions for running the script
 
@@ -10,7 +10,7 @@ https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Datas
 
 Unzip the data such that you have a subdirectory (in the working directory) that is called "UCI HAR Dataset".
 
-Then, run the script run_analysis.r. The first time you run it, a file called "joinedData.r" is saved in your working directory. In the next runs, when "joinedData.r" exists, it is loaded from there. This is done to save time when the actual data cleaning procedures are edited and the script is rerun.
+Then, run the script run_analysis.R. The first time you run it, a file called "joinedData.r" is saved in your working directory. In the next runs, when "joinedData.r" exists, it is loaded from there. This is done to save time when the actual data cleaning procedures are edited and the script is rerun.
 
 The cleaned data set is saved as "tidyData.r" in the working directory.
 

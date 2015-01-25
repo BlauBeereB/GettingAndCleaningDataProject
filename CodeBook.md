@@ -1,4 +1,4 @@
-## Code book for variables in tidy data set produced by script run_analysis.r
+## Code book for variables in tidy data set produced by script run_analysis.R
 
 # Format
 
