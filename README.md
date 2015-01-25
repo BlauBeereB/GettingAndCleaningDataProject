@@ -24,7 +24,7 @@ If the file "joinedData.r" exists, it is loaded. Otherwise, it is made as follow
 
 Part 2:
 
-The file "features.txt" from the original data is loaded and the names of the features are extracted. Two names are added, namely "subject" and "activity". Note that this order is in line with the order in which the files are joined in part 1. The columns in the joined data set are given these feature names. In addition, all names which refer to a mean or a standard deviation (abbreviated by std) are found. (Note that neither mean frequencies nor angles that involve a mean are taken into account.) Then, only columns with mean or standard deviation plus the subject and activity columns are extracted from "joinedSet" and saved as a new variable "extractedSet".
+The file "features.txt" from the original data is loaded and the names of the features are extracted. Two names are added, namely "subject" and "activity". Note that this order is in line with the order in which the files are joined in part 1. The columns in the joined data set are given these feature names. In addition, all names which refer to a measurement of a mean or a standard deviation (abbreviated by std) are found. (Note that neither mean frequencies nor angles that involve a mean are taken into account.) Then, only columns with mean or standard deviation plus the subject and activity columns are extracted from "joinedSet" and saved as a new variable "extractedSet".
 
 Part 3:
 
