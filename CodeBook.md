@@ -2,7 +2,7 @@
 
 # Format of the tidy data set
 
-The data set "tidySet" contains one row for each subject and each activity. There are 30 subjects (volunteers) and 6 activities (walking, walking upstairs, walking downstairs, sitting, standing, laying), which results in 180 rows. Each column contains the average over a measurement, and there are 68 measurements, i.e. 68 columns in the data set. The measurements are means and standard deviations of various original sensor signals which are described below.
+The data set "tidySet" contains one row for each subject and each activity. There are 30 subjects (volunteers) and 6 activities (walking, walking upstairs, walking downstairs, sitting, standing, laying), which results in 180 rows. There are 2 columns for the activity and the subject plus 66 columns for the average measurements, i.e. 68 columns in the data set. The actual measurements are means and standard deviations of various original sensor signals which are described below. Their averages per activity and subject are taken and saved in the tidy data set.
 
 # Sensor signals
 
